@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Pronunciation Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word Pronunciation Checker</h1>
+        <input type="text" id="wordInput" placeholder="Enter a word">
+        <button onclick="checkPronunciation()">Check Pronunciation</button>
+        <audio id="audioPlayer" controls style="display: none;"></audio>
+    </div>
+
+    <script>
+        function checkPronunciation() {
+            const word = document.getElementById('wordInput').value;
+            if (!word) {
+                alert('Please enter a word.');
+                return;
+            }
+
+            // Create a new SpeechSynthesisUtterance object
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'en-US'; // Set the language
+
+            // Set up the event handler for when the speech starts
+            utterance.onstart = () => {
+                console.log('Pronunciation started');
+            };
+
+            // Set up the event handler for when the speech ends
+            utterance.onend = () => {
+                console.log('Pronunciation ended');
+            };
+
+            // Play the pronunciation
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>
